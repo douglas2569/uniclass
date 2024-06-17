@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             UniclassTheme {
-                Scaffold() { innerPadding ->
+                Surface () {
                     App()
                 }
             }
@@ -34,28 +34,40 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun App(modifier:Modifier = Modifier) {
-        Surface (
-            modifier = modifier.fillMaxSize()
-        ){
-            val navController = rememberNavController()
-            NavHost(navController = navController, startDestination = "Sign Up") {
+fun App() {
+    val modifier:Modifier = Modifier.fillMaxSize().padding(top = 60.dp).padding(horizontal = 20.dp)
 
-                composable("main") {
-                    MainScreen()
-                }
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "log in") {
 
-                composable("Log in") {
-                    LogIn()
-                }
-
-                composable("Sign Up") {
-                    SignUp()
-                }
-
-            }
-
+        composable("main") {
+            MainScreen()
         }
+
+        composable("log in") {
+            LogIn(
+                    modifier,
+                    onLoginInClick = {
+                        navController.navigate("main")
+                    },
+                    onSignUpClick = {
+                        navController.navigate("sign up")
+                    },
+                )
+        }
+
+        composable("sign up") {
+            SignUp(
+                modifier,
+                onSignUpClick = {
+                    navController.popBackStack()
+                },
+            )
+        }
+
+    }
+
+
 
 }
 
