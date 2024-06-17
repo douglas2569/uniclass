@@ -39,7 +39,7 @@ fun App(modifier:Modifier = Modifier) {
             modifier = modifier.fillMaxSize()
         ){
             val navController = rememberNavController()
-            NavHost(navController = navController, startDestination = "main") {
+            NavHost(navController = navController, startDestination = "Sign Up") {
 
                 composable("main") {
                     MainScreen()
@@ -52,7 +52,6 @@ fun App(modifier:Modifier = Modifier) {
                 composable("Sign Up") {
                     SignUp()
                 }
-
 
             }
 
