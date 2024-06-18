@@ -24,6 +24,7 @@ fun UnitComponentTopBar(
             IconButton(onClick = onButtonClick ) {
                 //Icon(Icons.Filled.Favorite, contentDescription = "Localized description")
                 Icon(content, contentDescription = "Localized description")
+
             }
         }
 
