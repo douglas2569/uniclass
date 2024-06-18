@@ -44,8 +44,8 @@ fun LogIn(modifier: Modifier = Modifier, onLoginInClick:()->Unit, onSignUpClick:
         modifier = modifier
 
     ) {
-        TopBar("Log in", { UnitComponentTopBar("Left", {}) }, { UnitComponentTopBar("Right", {}) })
-        Spacer(modifier = Modifier.height( 16.dp))
+        TopBar("Log in", { UnitComponentTopBar("", {}) }, { UnitComponentTopBar("", {}) })
+
         TextField(
             value = email.value,
             onValueChange = {email.value = it},

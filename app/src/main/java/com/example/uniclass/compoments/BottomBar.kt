@@ -13,17 +13,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TopBar(title:String, buttonLeft: @Composable ()->Unit, buttonRight: @Composable ()->Unit){
-    Spacer(modifier = Modifier.height( 60.dp))
+fun BottomBar(
+    buttonCourse: @Composable ()->Unit,
+    buttonProfile: @Composable ()->Unit,
+    buttonSupport: @Composable ()->Unit
+    ){
 
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-        buttonLeft()
-        Text(text = title)
-        buttonRight()
+        buttonCourse()
+        buttonProfile()
+        buttonSupport()
 
     }
 
-    Spacer(modifier = Modifier.height( 16.dp))
 }
 
 
