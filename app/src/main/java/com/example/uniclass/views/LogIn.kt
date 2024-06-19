@@ -76,7 +76,7 @@ fun LogIn(modifier: Modifier = Modifier, onLoginInClick:()->Unit, onSignUpClick:
         Spacer(modifier = Modifier.height(16.dp))
         
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { onLoginInClick() },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = Color.Green)
             ) {
@@ -85,8 +85,8 @@ fun LogIn(modifier: Modifier = Modifier, onLoginInClick:()->Unit, onSignUpClick:
 
         Spacer(modifier = Modifier.height(16.dp))
         
-        TextButton(onClick = { /*TODO*/ }) {
-            Text("Esqueci minha senha")
+        TextButton(onClick = { onSignUpClick() }) {
+            Text("Cadastra-se")
         }
     }
 

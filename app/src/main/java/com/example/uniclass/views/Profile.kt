@@ -7,8 +7,8 @@ import com.example.uniclass.compoments.TopBar
 import com.example.uniclass.compoments.UnitComponentTopBar
 
 @Composable
-fun Profile(modifier: Modifier = Modifier) {
+fun Profile(onBackClick:()->Unit) {
     Column() {
-        TopBar("Perfil", { UnitComponentTopBar("Left", {}) }, { UnitComponentTopBar("Right", {}) })
+        TopBar("Perfil", { UnitComponentTopBar("Back", onBackClick) }, { UnitComponentTopBar("Filter", {}) })
     }
 }

@@ -38,10 +38,12 @@ fun App() {
     val modifier:Modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp)
 
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "main") {
+    NavHost(navController = navController, startDestination = "log in") {
 
         composable("main") {
-            Main()
+            Main(onLogOutClick = {
+                navController.navigate("log in")
+            })
         }
 
         composable("log in") {
@@ -59,9 +61,12 @@ fun App() {
         composable("sign up") {
             SignUp(
                 modifier,
-                onSignUpClick = {
-                    navController.popBackStack()
+                onCloseClick = {
+                    navController.navigate("log in")
                 },
+                onLogInClick = {
+                    navController.navigate("log in")
+                }
             )
         }
 

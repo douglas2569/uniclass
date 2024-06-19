@@ -7,9 +7,9 @@ import com.example.uniclass.compoments.TopBar
 import com.example.uniclass.compoments.UnitComponentTopBar
 
 @Composable
-fun SignUp(modifer: Modifier = Modifier, onSignUpClick:()->Unit) {
+fun SignUp(modifer: Modifier = Modifier, onCloseClick:()->Unit, onLogInClick:()->Unit) {
   Column(modifier = modifer) {
-    TopBar("Sign Up", { UnitComponentTopBar("Left", {}) }, { UnitComponentTopBar("Right", {}) })
+    TopBar("Sign Up", { UnitComponentTopBar("Close", onCloseClick) }, { UnitComponentTopBar("Login", onLogInClick) })
   }
 
 }

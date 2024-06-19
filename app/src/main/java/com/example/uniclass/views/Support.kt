@@ -7,8 +7,8 @@ import com.example.uniclass.compoments.TopBar
 import com.example.uniclass.compoments.UnitComponentTopBar
 
 @Composable
-fun Support() {
+fun Support(onBackClick:()->Unit) {
     Column() {
-        TopBar("Suporte", { UnitComponentTopBar("Left", {}) }, { UnitComponentTopBar("Right", {}) })
+        TopBar("Suporte", { UnitComponentTopBar("Back", onBackClick) }, { UnitComponentTopBar("Filter", {}) })
     }
 }

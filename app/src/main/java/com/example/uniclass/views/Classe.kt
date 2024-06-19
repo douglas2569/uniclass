@@ -7,8 +7,8 @@ import com.example.uniclass.compoments.TopBar
 import com.example.uniclass.compoments.UnitComponentTopBar
 
 @Composable
-fun Classe() {
+fun Classe(course:Map<String, Any> = mapOf(), onBackClick:()->Unit) {
     Column() {
-        TopBar("Aulas", { UnitComponentTopBar("Left", {}) }, { UnitComponentTopBar("Right", {}) })
+        TopBar("Aulas", { UnitComponentTopBar("Back", onBackClick ) }, { UnitComponentTopBar("Right", {}) })
     }
 }

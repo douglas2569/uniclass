@@ -21,33 +21,49 @@ import com.example.uniclass.compoments.TopBar
 import com.example.uniclass.compoments.UnitComponentTopBar
 
 @Composable
-fun Main(modifier: Modifier = Modifier) {
+fun Main(modifier: Modifier = Modifier, onLogOutClick:()->Unit) {
     Column(modifier = modifier.fillMaxHeight(), verticalArrangement = Arrangement.SpaceBetween) {
         val navController = rememberNavController()
         NavHost(modifier = Modifier.padding(horizontal = 20.dp), navController = navController, startDestination = "course") {
 
             composable("course") {
-                Course()
+                Course(
+                    onLogOutClick,
+                    onBackClassClick = {
+                        navController.navigate("course")
+                    },
+                    onGoClassClick = {
+                        navController.navigate("classe")
+                    }
+
+                )
             }
 
-            composable("classe") {
-                Classe()
-            }
 
             composable("profile") {
-                Profile()
+                Profile(onBackClick = {
+                    navController.navigate("course")
+                })
             }
 
             composable("support") {
-                Support()
+                Support(onBackClick = {
+                    navController.navigate("course")
+                })
+            }
+
+            composable("classe") {
+                Classe(onBackClick = {
+                    navController.navigate("course")
+                })
             }
 
         }
         Box(modifier = Modifier.fillMaxWidth()){
             BottomBar(
-                { UnitComponentTopBar("Cursos", {}) },
-                { UnitComponentTopBar("Perfil", {}) },
-                { UnitComponentTopBar("Suporte", {}) }
+                { UnitComponentTopBar("Cursos", { navController.navigate("course") }) },
+                { UnitComponentTopBar("Perfil", { navController.navigate("profile") }) },
+                { UnitComponentTopBar("Suporte", { navController.navigate("support") }) }
             )
         }
 
