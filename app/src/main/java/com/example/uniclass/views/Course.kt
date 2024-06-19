@@ -6,10 +6,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -17,6 +22,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,18 +41,36 @@ import com.example.uniclass.compoments.UnitComponentTopBar
 
 fun Course() {
     var searchValue by remember { mutableStateOf("") }
-    val courses:List<Any> = listOf(
+    val courses:List<List<Any>> = listOf(
         listOf(
             painterResource(R.drawable.ic_launcher_background),
             "Decrição Imagem 1",
-            "Titulo1",
-            "Subtitulo1"
+            "Titulo 1",
+            "Subtitulo 1"
         ),
         listOf(
             painterResource(R.drawable.ic_launcher_background),
             "Decrição Imagem 2",
-            "Titulo2",
-            "Subtitulo2"
+            "Titulo 2",
+            "Subtitulo 2"
+        ),
+        listOf(
+            painterResource(R.drawable.ic_launcher_background),
+            "Decrição Imagem 3",
+            "Titulo 3",
+            "Subtitulo 3"
+        ),
+        listOf(
+            painterResource(R.drawable.ic_launcher_background),
+            "Decrição Imagem 4",
+            "Titulo 4",
+            "Subtitulo 4"
+        ),
+        listOf(
+            painterResource(R.drawable.ic_launcher_background),
+            "Decrição Imagem 4",
+            "Titulo 4",
+            "Subtitulo 4"
         )
     )
 
@@ -70,23 +94,21 @@ fun Course() {
             },
         )
 
-        Column {
-            for (course in courses) {
-                listItem(course[0], course[1],  course[2],  course[3])
-            }
-        }
+        ScrollContent(courses)
+
 
     }
 }
 
 @Composable
-fun listItem(srcImage:Painter, imageDescription:String, title:String, subtitle:String){
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(8.dp)) {
+private fun listItem(srcImage:Painter, imageDescription:String, title:String, subtitle:String){
+    Spacer(modifier = Modifier.height( 8.dp))
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .background(Color.LightGray)){
         Box(
-            Modifier
-                .fillMaxWidth()
-                .height(100.dp)
-                .background(Color.Cyan)
+            Modifier.height(100.dp)
         ) {
             Image(
                 painter = srcImage,
@@ -94,10 +116,30 @@ fun listItem(srcImage:Painter, imageDescription:String, title:String, subtitle:S
             )
         }
 
-        Column {
-            Text(text = title)
-            Text(text = subtitle)
+        Box {
+            Column {
+                Text(text = title)
+                Text(text = subtitle)
+            }
+
         }
     }
 
+}
+
+@Composable
+private fun ScrollContent(courses:List<List<Any>>) {
+    val state = rememberScrollState()
+    LaunchedEffect(Unit) { state.animateScrollTo(100) }
+
+    Column(
+        modifier = Modifier
+            .height(456.dp)
+            .background(Color.LightGray)
+            .verticalScroll(state)
+    ) {
+        for (course in courses) {
+            listItem(course[0] as Painter, course[1] as String,  course[2] as String,  course[3] as String)
+        }
+    }
 }
