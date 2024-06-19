@@ -13,9 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.uniclass.compoments.BottomBar
 import com.example.uniclass.compoments.TopBar
 import com.example.uniclass.compoments.UnitComponentTopBar
@@ -39,7 +41,6 @@ fun Main(modifier: Modifier = Modifier, onLogOutClick:()->Unit) {
                 )
             }
 
-
             composable("profile") {
                 Profile(onBackClick = {
                     navController.navigate("course")
@@ -52,10 +53,15 @@ fun Main(modifier: Modifier = Modifier, onLogOutClick:()->Unit) {
                 })
             }
 
-            composable("classe") {
-                Classe(onBackClick = {
-                    navController.navigate("course")
-                })
+            composable(
+                "classe/{type}",
+                arguments = listOf(navArgument("type") { type = NavType.StringType })
+            ) {backStackEntry ->
+
+                Classe(
+                    onBackClick = { navController.navigate("course") },
+                    type = backStackEntry.arguments?.getString("type")
+                )
             }
 
         }

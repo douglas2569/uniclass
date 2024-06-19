@@ -109,8 +109,7 @@ fun Course(onLogInClick:()->Unit, onBackClassClick:()->Unit, onGoClassClick:()->
 }
 
 @Composable
-private fun listItem(srcImage:Painter, imageDescription:String, title:String, subtitle:String){
-    Spacer(modifier = Modifier.height( 8.dp))
+private fun ListItem(srcImage:Painter, imageDescription:String, title:String, subtitle:String){
 
 
         Row(
@@ -153,8 +152,10 @@ private fun ScrollContent(courses:List<List<Any>>, onGoClassClick:()->Unit) {
     ) {
         for (course in courses) {
             Surface(onClick = onGoClassClick ) {
-                listItem(course[0] as Painter, course[1] as String,  course[2] as String,  course[3] as String)
+                ListItem(course[0] as Painter, course[1] as String,  course[2] as String,  course[3] as String)
             }
+
+            Spacer(modifier = Modifier.height( 16.dp))
         }
     }
 }
