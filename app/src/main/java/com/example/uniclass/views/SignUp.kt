@@ -1,15 +1,78 @@
 package com.example.uniclass.views
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import com.example.uniclass.compoments.CheckboxComponent
+import com.example.uniclass.compoments.PasswordTextFieldComponent
+import com.example.uniclass.compoments.TextFieldComponent
 import com.example.uniclass.compoments.TopBar
 import com.example.uniclass.compoments.UnitComponentTopBar
 
 @Composable
-fun SignUp(modifer: Modifier = Modifier, onCloseClick:()->Unit, onLogInClick:()->Unit) {
-  Column(modifier = modifer) {
-    TopBar("Sign Up", { UnitComponentTopBar("Close", onCloseClick) }, { UnitComponentTopBar("Login", onLogInClick) })
-  }
+fun SignUp(modifier: Modifier = Modifier, onCloseClick:()->Unit, onLogInClick:()->Unit) {
 
+  Surface(
+    color = Color.White,
+    modifier = Modifier
+      .fillMaxSize()
+      .background(Color.White)
+      .padding(28.dp)
+  ) {
+    Column(modifier = modifier) {
+
+      TopBar("Sign Up", { UnitComponentTopBar("Close", onCloseClick) }, { UnitComponentTopBar("Login", onLogInClick) })
+
+      Spacer(modifier = Modifier.height(25.dp))
+
+      Column {
+
+        TextFieldComponent(
+          labelValue = "Nome",
+          icon = Icons.Outlined.Person
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+        TextFieldComponent(
+          labelValue = "Email",
+          icon = Icons.Outlined.Email
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+        PasswordTextFieldComponent(
+          labelValue = "Password",
+          icon = Icons.Outlined.Lock
+        )
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+
+        Button(
+          onClick = { /*TODO*/ },
+          modifier = Modifier.fillMaxWidth(),
+          colors = ButtonDefaults.buttonColors(containerColor = Color.Green)
+        ) {
+          Text(text = "Sing Up")
+
+
+          CheckboxComponent()
+
+        }
+      }
+    }
+  }
 }
