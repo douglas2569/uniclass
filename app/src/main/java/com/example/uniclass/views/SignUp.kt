@@ -33,7 +33,7 @@ fun SignUp(modifier: Modifier = Modifier, onCloseClick:()->Unit, onLogInClick:()
     modifier = Modifier
       .fillMaxSize()
       .background(Color.White)
-      .padding(28.dp)
+
   ) {
     Column(modifier = modifier) {
 
