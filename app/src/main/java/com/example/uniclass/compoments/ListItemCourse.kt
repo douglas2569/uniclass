@@ -15,11 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.motionEventSpy
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun ListCourseItem(srcImage: Painter, imageDescription:String, title:String, subtitle:String, viewingDate:String){
+fun ListCourseItem(srcImage: Int, imageDescription:String, title:String, subtitle:String, viewingDate:String){
 
     Row(
         Modifier
@@ -31,7 +32,7 @@ fun ListCourseItem(srcImage: Painter, imageDescription:String, title:String, sub
             Modifier.height(100.dp)
         ) {
             Image(
-                painter = srcImage,
+                painter = painterResource(srcImage),
                 contentDescription = imageDescription
             )
         }

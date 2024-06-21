@@ -38,18 +38,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.uniclass.R
 import com.example.uniclass.compoments.ListCourses
 import com.example.uniclass.compoments.TopBar
 import com.example.uniclass.compoments.UnitComponentTopBar
-import com.example.uniclass.database.database
+import com.example.uniclass.database.Database
 
 @Composable
 fun Profile(onLogOutClick:()->Unit, onGoClassClick: (Any?, Any?) -> Unit, onBackClick:() -> Unit) {
     var showSheet by remember { mutableStateOf(false) }
-    var courses = database()
+    var courses = Database().getCourses()
     courses = courses.subList(2,5)
 
     if (showSheet) {

@@ -68,11 +68,19 @@ fun Main(modifier: Modifier = Modifier, onLogOutClick:()->Unit) {
                         )
                     ) {backStackEntry ->
 
-                        CourseItem(
+                        Classes(
                             //onBackClick = { navController.navigate("course") },
                             onBackClick = { backStackEntry.arguments?.getString("route")
                                 ?.let { navController.navigate(it) } },
-                            type = backStackEntry.arguments?.getString("type")
+                            type = backStackEntry.arguments?.getString("type"),
+                            {
+                                BottomBar(
+                                    { UnitComponentTopBar("Cursos", { navController.navigate("course") }) },
+                                    { UnitComponentTopBar("Perfil", { navController.navigate("profile") }) },
+                                    { UnitComponentTopBar("Suporte", { navController.navigate("support") }) }
+                                )
+
+                            }
                         )
                     }
 

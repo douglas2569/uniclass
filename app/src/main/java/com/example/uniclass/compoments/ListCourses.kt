@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun ListCourses(courses:List<List<Any>>, onGoClassClick: (Any?,String) -> Unit, routeBack:String) {
+fun ListCourses(courses:List<Map<String, Any>>, onGoClassClick: (Any?,String) -> Unit, routeBack:String) {
     val state = rememberScrollState()
     LaunchedEffect(Unit) { state.animateScrollTo(100) }
 
@@ -27,11 +27,11 @@ fun ListCourses(courses:List<List<Any>>, onGoClassClick: (Any?,String) -> Unit, 
             .verticalScroll(state)
     ) {
         //para mostrar todo primeiro item
-        Spacer(modifier = Modifier.height( 80.dp))
+        Spacer(modifier = Modifier.height( 40.dp))
 
         for (course in courses) {
-            Surface(onClick = { onGoClassClick(routeBack, course[2] as String) }) {
-                ListCourseItem(course[0] as Painter, course[1] as String,  course[2] as String,  course[3] as String,course[4] as String)
+            Surface(onClick = { onGoClassClick(routeBack, course["title"] as String) }) {
+                ListCourseItem(course["image"] as Int, course["imageDescription"] as String, course["title"] as String, course["subtitle"] as String, course["viewingDate"] as String)
             }
 
             Spacer(modifier = Modifier.height( 16.dp))
