@@ -29,11 +29,7 @@ fun Search(){
         onValueChange = {
             searchValue = it
         },
-        placeholder = { Text(text = "Digite sua pesquisa") },
-        suffix = {
-            IconButton(onClick = {}) {
-                Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
-            }
-        },
+        placeholder = { Text(text = "Search") },
+
     )
 }

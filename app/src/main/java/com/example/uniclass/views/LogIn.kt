@@ -16,6 +16,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -24,6 +25,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.uniclass.R
+import com.example.uniclass.compoments.PasswordTextField
+import com.example.uniclass.compoments.SimpleTextField
 import com.example.uniclass.compoments.TopBar
 import com.example.uniclass.compoments.UnitComponentTopBar
 
@@ -41,38 +44,18 @@ fun LogIn(modifier: Modifier = Modifier, onLoginInClick:()->Unit, onSignUpClick:
     }
 
     Column(
-        modifier = modifier
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
 
     ) {
         TopBar("Log in", { UnitComponentTopBar("", {}) }, { UnitComponentTopBar("", {}) })
 
-        TextField(
-            value = email.value,
-            onValueChange = {email.value = it},
-            label = { Text(text="Email") },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(20.dp)
-        )
-        TextField(
-            value = password.value, 
-            onValueChange = { password.value = it },
-            label = { Text(text = "Senha") },
-            visualTransformation = if (passwordVisibility.value) VisualTransformation.None else PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            /*
-            trailingIcon = {
-                val image = if(passwordVisibility.value)
-                                Icon(painter = painterResource(id = R.drawable.visible), contentDescription = "Visivel")
-                            else
-                                Icon(painter = painterResource(id = R.drawable.invisible), contentDescription = "Invisivel")
-                                IconButton(onClick = { passwordVisibility.value != passwordVisibility.value }) {}
+        SimpleTextField("Email")
 
-            },
-             */
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(20.dp)
-        )
-        
+        Spacer(modifier = Modifier.height(25.dp))
+
+        PasswordTextField("Password")
+
         Spacer(modifier = Modifier.height(16.dp))
         
         Button(
@@ -83,8 +66,12 @@ fun LogIn(modifier: Modifier = Modifier, onLoginInClick:()->Unit, onSignUpClick:
             Text(text = "Login")
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-        
+        Spacer(modifier = Modifier.height(8.dp))
+
+        TextButton(onClick = { onSignUpClick() }) {
+            Text("Forgot your password?")
+        }
+
         TextButton(onClick = { onSignUpClick() }) {
             Text("Cadastra-se")
         }

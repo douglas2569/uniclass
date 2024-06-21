@@ -14,13 +14,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import com.example.uniclass.compoments.Search
+import com.example.uniclass.compoments.SimpleCheckbox
 import com.example.uniclass.compoments.TopBar
 import com.example.uniclass.compoments.UnitComponentTopBar
-import com.example.uniclass.database.Database
+import com.example.uniclass.database.database
 
 @Composable
 fun Classe(onBackClick:()->Unit, type:String?) {
-    val courses = Database()
+    val courses = database()
     var course:List<Any> = listOf()
 
     for (itemList in courses) {
@@ -34,12 +35,12 @@ fun Classe(onBackClick:()->Unit, type:String?) {
         Search()
         if (type == null) return
 
-        ClasseContent(course[0] as Painter, course[1] as String, course[2] as String, course[3] as String)
+        ClasseContent(course[0] as Painter, course[1] as String, course[2] as String, course[3] as String, course[4] as String)
     }
 }
 
 @Composable
-fun ClasseContent(srcImage: Painter, imageDescription:String, title:String, subtitle:String) {
+fun ClasseContent(srcImage: Painter, imageDescription:String, title:String, subtitle:String, viewingDate:String) {
     Column {
 
         Box(
@@ -55,8 +56,11 @@ fun ClasseContent(srcImage: Painter, imageDescription:String, title:String, subt
             Column {
                 Text(text = title)
                 Text(text = subtitle)
+                Text(text = viewingDate)
             }
         }
+
+        SimpleCheckbox("Assistida")
 
     }
 

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
@@ -16,11 +17,14 @@ import androidx.compose.ui.unit.dp
 fun TopBar(title:String, buttonLeft: @Composable ()->Unit, buttonRight: @Composable ()->Unit){
     Spacer(modifier = Modifier.height( 60.dp))
 
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+    Row(modifier = Modifier
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+            ) {
         buttonLeft()
         Text(text = title)
         buttonRight()
-
     }
 
     Spacer(modifier = Modifier.height( 16.dp))

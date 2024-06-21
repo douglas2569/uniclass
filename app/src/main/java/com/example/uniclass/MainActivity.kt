@@ -66,6 +66,9 @@ fun App() {
                 },
                 onLogInClick = {
                     navController.navigate("log in")
+                },
+                onSignUpClick = {
+                    navController.navigate("main")
                 }
             )
         }

@@ -22,7 +22,7 @@ fun BottomBar(
     buttonSupport: @Composable ()->Unit
     ){
 
-    Row(modifier = Modifier.fillMaxWidth().background(Color.Blue).padding(top = 16.dp, bottom = 24.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+    Row(modifier = Modifier.fillMaxWidth().background(Color.White).height(80.dp) , horizontalArrangement = Arrangement.SpaceBetween) {
         buttonCourse()
         buttonProfile()
         buttonSupport()
