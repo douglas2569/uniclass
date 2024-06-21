@@ -82,43 +82,7 @@ fun Profile(onLogOutClick:()->Unit, onGoClassClick: (Any?, Any?) -> Unit, onBack
                         )
                     )
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(CircleShape)
-                            .background(color = Color.LightGray)
-                            .height(50.dp)
-                        ,
-
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        Button(
-                            onClick = { /*TODO*/ },
-                            colors = ButtonDefaults.buttonColors(Color.LightGray),
-                            modifier = Modifier
-                                .weight(1F)
-                                .fillMaxHeight()
-                                .clip(RoundedCornerShape(50))
-                                .border(border = BorderStroke(4.dp, Color.LightGray))
-                        ) {
-                            Text(text = "Posts", color = Color.White)
-                        }
-
-                        Button(
-                            onClick = { /*TODO*/ },
-                            colors = ButtonDefaults.buttonColors(Color.White),
-                            modifier = Modifier
-                                .weight(1F)
-                                .fillMaxHeight()
-                                .clip(RoundedCornerShape(50))
-                                .border(
-                                    border = BorderStroke(4.dp, Color.LightGray),
-                                    shape = RoundedCornerShape(50)
-                                )
-                        ) {
-                            Text(text = "Photos", color = Color.Green)
-                        }
-                    }
+                    DoubleSwitch()
 
                     Spacer(modifier = Modifier.height(20.dp))
 
@@ -188,4 +152,75 @@ fun ProfileImage(
 
     }
 
+}
+
+@Composable
+fun DoubleSwitch(){
+    var stateSwitch by remember { mutableStateOf(true) }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(CircleShape)
+            .background(color = Color.LightGray)
+            .height(50.dp)
+        ,
+
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        Button(
+            onClick = { stateSwitch = !stateSwitch },
+            colors = ButtonDefaults.buttonColors(
+                if (stateSwitch)
+                    Color.White
+                else
+                    Color.LightGray
+
+            ),
+            modifier = Modifier
+                .weight(1F)
+                .fillMaxHeight()
+                .clip(RoundedCornerShape(50))
+                .border(
+                    border = BorderStroke(4.dp, Color.LightGray),
+                    shape = RoundedCornerShape(50)
+                )
+        ) {
+            Text(
+                text = "Posts",
+                color = if (stateSwitch)
+                        Color.Green
+                    else
+                        Color.White
+            )
+        }
+
+        Button(
+            onClick = { stateSwitch = !stateSwitch },
+            colors = ButtonDefaults.buttonColors(
+                if (!stateSwitch)
+                    Color.White
+                else
+                    Color.LightGray
+
+            ),
+            modifier = Modifier
+                .weight(1F)
+                .fillMaxHeight()
+                .clip(RoundedCornerShape(50))
+                .border(
+                    border = BorderStroke(4.dp, Color.LightGray),
+                    shape = RoundedCornerShape(50)
+                ),
+
+        ) {
+            Text(
+                text = "Photos",
+                color = if (!stateSwitch)
+                    Color.Green
+                else
+                    Color.White
+            )
+        }
+    }
 }

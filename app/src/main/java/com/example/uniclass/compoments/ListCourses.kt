@@ -26,6 +26,9 @@ fun ListCourses(courses:List<List<Any>>, onGoClassClick: (Any?,String) -> Unit, 
             .fillMaxHeight()
             .verticalScroll(state)
     ) {
+        //para mostrar todo primeiro item
+        Spacer(modifier = Modifier.height( 80.dp))
+
         for (course in courses) {
             Surface(onClick = { onGoClassClick(routeBack, course[2] as String) }) {
                 ListCourseItem(course[0] as Painter, course[1] as String,  course[2] as String,  course[3] as String,course[4] as String)

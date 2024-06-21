@@ -27,10 +27,7 @@ fun Course(onLogInClick:()->Unit, onBackClassClick:()->Unit, onGoClassClick: (An
         Search()
         Spacer(modifier = Modifier.height(16.dp))
         ListCourses(courses, onGoClassClick,"course")
-
-
     }
-
 
 
 }
