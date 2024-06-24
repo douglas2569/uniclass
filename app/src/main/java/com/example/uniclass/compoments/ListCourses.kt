@@ -19,25 +19,21 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ListCourses(courses:List<Map<String, Any>>, onGoClassClick: (Any?,String) -> Unit, routeBack:String) {
     val state = rememberScrollState()
-    LaunchedEffect(Unit) { state.animateScrollTo(100) }
+    LaunchedEffect(Unit) { state.animateScrollTo(0) }
 
     Column(
         modifier = Modifier
-            .fillMaxHeight()
             .verticalScroll(state)
     ) {
-        //para mostrar todo primeiro item
-        Spacer(modifier = Modifier.height( 40.dp))
 
         for (course in courses) {
             Surface(onClick = { onGoClassClick(routeBack, course["title"] as String) }) {
-                ListCourseItem(course["image"] as Int, course["imageDescription"] as String, course["title"] as String, course["subtitle"] as String, course["viewingDate"] as String)
+                ListCourseItem(course["image"] as Int, course["imageDescription"] as String, course["title"] as String, course["description"] as String, course["viewingDate"] as String)
             }
 
-            Spacer(modifier = Modifier.height( 16.dp))
         }
-        //para mostrar o ultmo item
-        Spacer(modifier = Modifier.height( 80.dp))
+        //para mostrar o ultimo item
+        //Spacer(modifier = Modifier.height( 80.dp))
     }
 
 

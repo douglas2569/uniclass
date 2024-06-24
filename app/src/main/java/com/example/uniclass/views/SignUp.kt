@@ -24,18 +24,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.uniclass.compoments.SimpleCheckbox
+import com.example.uniclass.compoments.ActionButton
 import com.example.uniclass.compoments.PasswordTextField
-import com.example.uniclass.compoments.PasswordTextFieldComponent
 import com.example.uniclass.compoments.SimpleCheckbox
+import com.example.uniclass.compoments.SimpleTextButton
 import com.example.uniclass.compoments.SimpleTextField
-import com.example.uniclass.compoments.TextFieldComponent
 import com.example.uniclass.compoments.TopBar
-import com.example.uniclass.compoments.UnitComponentTopBar
+import com.example.uniclass.compoments.UnitComponentBar
 
 @Composable
-fun SignUp(modifier: Modifier = Modifier, onCloseClick:()->Unit, onLogInClick:()->Unit, onSignUpClick:()->Unit) {
+fun SignUp(modifier: Modifier = Modifier, onCloseClick:()->Unit, onLogInClick:()->Unit, onSignUpClick:()->Unit, paddingHorizontal: Dp = 20.dp) {
 
   Surface(
     color = Color.White,
@@ -46,23 +46,23 @@ fun SignUp(modifier: Modifier = Modifier, onCloseClick:()->Unit, onLogInClick:()
   ) {
     Column(modifier = modifier) {
 
-      TopBar("Sign Up", { UnitComponentTopBar(Icons.Outlined.Close, onCloseClick) }, { UnitComponentTopBar("Login", onLogInClick) })
+      TopBar("Sign Up", { UnitComponentBar(Icons.Outlined.Close, onCloseClick) }, { UnitComponentBar("Login", onLogInClick) })
 
-      Spacer(modifier = Modifier.height(25.dp))
+      Spacer(modifier = Modifier.height(24.dp))
 
       Column {
 
         SimpleTextField("Nome")
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         SimpleTextField("Email")
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         PasswordTextField("Password")
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         Row(
           horizontalArrangement = Arrangement.SpaceBetween,
@@ -70,19 +70,14 @@ fun SignUp(modifier: Modifier = Modifier, onCloseClick:()->Unit, onLogInClick:()
           modifier = Modifier.fillMaxWidth(),
 
         ) {
+
           SimpleCheckbox("I would like to receive your newsletter and other promotional information.")
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.weight(1f))
 
-        Button(
-          onClick = { onSignUpClick() },
-          modifier = Modifier.fillMaxWidth(),
-          colors = ButtonDefaults.buttonColors(containerColor = Color.Green),
 
-        ) {
-          Text(text = "Sing Up")         
-        }
+        ActionButton("Sing Up", onSignUpClick )
 
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -92,12 +87,10 @@ fun SignUp(modifier: Modifier = Modifier, onCloseClick:()->Unit, onLogInClick:()
 
           ) {
 
-          TextButton(
-            onClick = { }
-          ) {
-            Text("Forgot your password?")
-          }
+          SimpleTextButton("Forgot your password?",{})
         }
+
+        Spacer(modifier = Modifier.height(20.dp))
 
       }
     }

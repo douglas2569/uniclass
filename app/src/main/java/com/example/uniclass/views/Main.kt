@@ -4,10 +4,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -15,10 +18,43 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.uniclass.compoments.BottomBar
-import com.example.uniclass.compoments.UnitComponentTopBar
+import com.example.uniclass.compoments.UnitComponentBar
+import com.example.uniclass.compoments.UnitComponentBarCircle
+import com.example.uniclass.config.Primary
+import com.example.uniclass.database.dataClasse
 
 @Composable
 fun Main(modifier: Modifier = Modifier, onLogOutClick:()->Unit) {
+    var classes: List<Map<String, Any>> = dataClasse()
+
+
+    val onStatusChangeClassItem = { userNameFk:String, title:String, status:Boolean ->
+        classes = classes.map { map ->
+            if (map["user_name_fk"] == userNameFk && map["title"] == title) {
+                map +  ("status" to status)
+            }else {
+                map
+            }
+        }
+    }
+
+    val getClassesUpdated = { classes  }
+
+    var statusBottomBarColors = remember {
+        mutableStateListOf(
+            mapOf("C" to listOf(Primary, Color.White)),
+            mapOf("P" to listOf(Color.LightGray, Color.Black)),
+            mapOf("S" to listOf(Color.LightGray, Color.Black))
+        )
+    }
+
+    val getStatusBottomBarColors = { statusBottomBarColors }
+
+    val updatedStatusBottomBarColors = { newsStatusBottomBarColors: SnapshotStateList<Map<String, List<Color>>> ->
+        statusBottomBarColors = newsStatusBottomBarColors
+    }
+
+
     Column() {
         val navController = rememberNavController()
 
@@ -28,7 +64,7 @@ fun Main(modifier: Modifier = Modifier, onLogOutClick:()->Unit) {
             modifier = modifier.fillMaxHeight(),
             content = { innerPadding ->
 
-                NavHost(modifier = Modifier.padding(horizontal = 20.dp), navController = navController, startDestination = "course") {
+                NavHost(navController = navController, startDestination = "course") {
 
                     composable("course") {
                         Course(
@@ -37,7 +73,7 @@ fun Main(modifier: Modifier = Modifier, onLogOutClick:()->Unit) {
                                 navController.navigate("course")
                             },
                             onGoClassClick = {
-                                    route, type -> navController.navigate("classe/${type}/${route}")
+                                    route, title -> navController.navigate("classe/${title}/${route}")
                             }
 
                         )
@@ -47,11 +83,12 @@ fun Main(modifier: Modifier = Modifier, onLogOutClick:()->Unit) {
                         Profile(
                             onLogOutClick,
                         onGoClassClick = {
-                                route, type -> navController.navigate("classe/${type}/${route}")
+                                route, title -> navController.navigate("classe/${title}/${route}")
                         },
                         onBackClick = {
                             navController.navigate("profile")
                         })
+
                     }
 
                     composable("support") {
@@ -61,10 +98,10 @@ fun Main(modifier: Modifier = Modifier, onLogOutClick:()->Unit) {
                     }
 
                     composable(
-                        "classe/{type}/{route}",
+                        "classe/{title}/{route}",
                         arguments = listOf(
-                            navArgument("type") { type = NavType.StringType },
-                            navArgument("route") { type = NavType.StringType }
+                            navArgument("title") { NavType.StringType },
+                            navArgument("route") {  NavType.StringType }
                         )
                     ) {backStackEntry ->
 
@@ -72,16 +109,32 @@ fun Main(modifier: Modifier = Modifier, onLogOutClick:()->Unit) {
                             //onBackClick = { navController.navigate("course") },
                             onBackClick = { backStackEntry.arguments?.getString("route")
                                 ?.let { navController.navigate(it) } },
-                            type = backStackEntry.arguments?.getString("type"),
+                            title = backStackEntry.arguments?.getString("title"),
                             {
                                 BottomBar(
-                                    { UnitComponentTopBar("Cursos", { navController.navigate("course") }) },
-                                    { UnitComponentTopBar("Perfil", { navController.navigate("profile") }) },
-                                    { UnitComponentTopBar("Suporte", { navController.navigate("support") }) }
+                                    { UnitComponentBar("Cursos", { navController.navigate("course") }) },
+                                    { UnitComponentBar("Perfil", { navController.navigate("profile") }) },
+                                    { UnitComponentBar("Suporte", { navController.navigate("support") }) }
                                 )
 
-                            }
+                            },20.dp
+                            ,onStatusChangeClassItem,
+                            classes
+                            ,
+                            {
+                                navController.navigate("certificate")
+                            },
+                            getClassesUpdated
                         )
+                    }
+
+                    composable("certificate") {
+                        Certificate(
+
+                            onBackClick = {
+                                navController.navigate("course")
+                            })
+
                     }
 
                 }
@@ -90,11 +143,38 @@ fun Main(modifier: Modifier = Modifier, onLogOutClick:()->Unit) {
             },
             bottomBar = {
                 Box(modifier = Modifier.fillMaxWidth()){
+
                     BottomBar(
-                        { UnitComponentTopBar("Cursos", { navController.navigate("course") }) },
-                        { UnitComponentTopBar("Perfil", { navController.navigate("profile") }) },
-                        { UnitComponentTopBar("Suporte", { navController.navigate("support") }) }
+                        {
+                            UnitComponentBarCircle("C", {
+                                    navController.navigate("course")
+                                },
+                                updatedStatusBottomBarColors,
+                                getStatusBottomBarColors
+                            )
+                        },
+
+                        {
+                            UnitComponentBarCircle("P",
+                                {
+                                    navController.navigate("profile")
+                                },
+                                updatedStatusBottomBarColors,
+                                getStatusBottomBarColors
+                            )
+                        },
+
+                        {
+                            UnitComponentBarCircle("S",
+                                {
+                                    navController.navigate("support")
+                                },
+                                updatedStatusBottomBarColors,
+                                getStatusBottomBarColors
+                            )
+                        }
                     )
+
                 }
             },
         )
@@ -105,4 +185,3 @@ fun Main(modifier: Modifier = Modifier, onLogOutClick:()->Unit) {
 
 
 }
-

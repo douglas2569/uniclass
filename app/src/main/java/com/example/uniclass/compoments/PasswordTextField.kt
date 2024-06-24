@@ -31,13 +31,14 @@ fun PasswordTextField(value:String) {
 
     OutlinedTextField(
         modifier = Modifier
-            .fillMaxWidth(),
-        shape = RoundedCornerShape(50.dp),
+            .fillMaxWidth()
+            .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(10.dp)),
+        shape = RoundedCornerShape(10.dp),
 
         value = text,
         onValueChange = { text = it },
         //label = { Text(value) },
-        placeholder = { Text(text = value) },
+        placeholder = { Text(text = value, color = Color.LightGray) },
 
         )
 

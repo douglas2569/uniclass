@@ -6,17 +6,20 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomSheetDefaults
@@ -38,18 +41,30 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.uniclass.R
+import com.example.uniclass.compoments.ActionButton
+import com.example.uniclass.compoments.ListCourseItem
 import com.example.uniclass.compoments.ListCourses
+import com.example.uniclass.compoments.SimpleTextButton
 import com.example.uniclass.compoments.TopBar
-import com.example.uniclass.compoments.UnitComponentTopBar
-import com.example.uniclass.database.Database
+import com.example.uniclass.compoments.UnitComponentBar
+import com.example.uniclass.config.Primary
+import com.example.uniclass.database.dataCourses
 
 @Composable
-fun Profile(onLogOutClick:()->Unit, onGoClassClick: (Any?, Any?) -> Unit, onBackClick:() -> Unit) {
+fun Profile(onLogOutClick:()->Unit, onGoClassClick: (Any?, Any?) -> Unit, onBackClick:() -> Unit, paddingHorizontal: Dp = 20.dp) {
     var showSheet by remember { mutableStateOf(false) }
-    var courses = Database().getCourses()
-    courses = courses.subList(2,5)
+    val courses = dataCourses()
+
+    for (itemList in courses) {
+        if (itemList["user_name_fk"] == "carlos_123") {
+            ListCourseItem(itemList["image"] as Int, itemList["imageDescription"] as String, itemList["title"] as String, itemList["description"] as String, itemList["viewingDate"] as String)
+        }
+    }
 
     if (showSheet) {
         BottomSheet() {
@@ -58,38 +73,72 @@ fun Profile(onLogOutClick:()->Unit, onGoClassClick: (Any?, Any?) -> Unit, onBack
     }
 
     Column() {
-            Spacer(modifier = Modifier.height( 60.dp))
-            Row {
-                TopBar("Perfil", { UnitComponentTopBar("Settings", { showSheet = true }) }, { UnitComponentTopBar("Logout", onLogOutClick) })
+            Row(modifier = Modifier
+                .background(Primary)
+                .height(220.dp)
+                .padding(top = 60.dp)
+                //.padding(
+                   // top = WindowInsets
+                       // .statusBars
+                       // .asPaddingValues()
+                       // .calculateTopPadding()
+                //)
+            ) {
+                TopBar(
+                    "Perfil",
+                    { UnitComponentBar("Settings", { showSheet = true }, Color.White) },
+                    { UnitComponentBar("Logout", onLogOutClick, Color.White) },
+                    Color.White
+                )
             }
 
-            Row {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
+        Column(
+            modifier = Modifier.padding(horizontal = paddingHorizontal),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(10.dp))
+            ProfileImage(R.drawable.ic_launcher_background)
+            Spacer(modifier = Modifier.height(10.dp))
+            Column(
+                Modifier.offset(y = (-100).dp)
                 ) {
-                    ProfileImage(R.drawable.ic_launcher_background)
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
                     Text(
-                        text = "Victoria Robertson" ,
+                        text = "Victoria Robertson",
                         modifier = Modifier.paddingFromBaseline(
-                            top = 24.dp, bottom = 8.dp)
+                            top = 24.dp, bottom = 10.dp
+                        ),
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 24.sp
                     )
 
                     Text(
                         text = "A mantra goes here",
                         modifier = Modifier.paddingFromBaseline(
-                            top = 24.dp, bottom = 8.dp
-                        )
+                            top = 24.dp, bottom = 10.dp
+                        ),
+                        fontWeight = FontWeight.SemiBold
                     )
+
+                    Spacer(modifier = Modifier.height(20.dp))
 
                     DoubleSwitch()
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    ListCourses(courses, onGoClassClick,"profile")
+                    Row {
+                        ListCourses(courses, onGoClassClick,"profile")
+                    }
+
+                }
             }
 
 
         }
+
+
+
 
     }
 
@@ -111,21 +160,33 @@ fun BottomSheet(onDismiss: () -> Unit) {
     }
 }
 
+//Bottom Drawer
 @Composable
 fun Settings() {
 
     Column(modifier =
-        Modifier.padding(horizontal = 20.dp).fillMaxWidth(),
+    Modifier
+        .padding(horizontal = 30.dp)
+        .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Drawer Header")
-        Text(text = "Description")
-        Button(onClick = { /*TODO*/ }) {
-            Text(text = "Click Me")
-        }
-        TextButton(onClick = { /*TODO*/ }) {
-            Text(text = "Secondary Action")
-        }
+        Text(
+            text = "Drawer Header",
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text = "Consequat velit qui adipisicing sunt do reprehenderit ad laborum tempor ullamco exercitation.",
+            fontSize = 16.sp,
+            color = Color.Gray
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        ActionButton("Click Me", { /*TODO*/ })
+
+        SimpleTextButton("Secondary Action", { /*TODO*/ })
+
     }
 }
 @Composable
@@ -137,17 +198,20 @@ fun ProfileImage(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Image(painter = painterResource(id = drawable),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(150.dp)
-                .clip(CircleShape)
-                .border(
-                    border = BorderStroke(10.dp, Color.White),
-                    shape = RoundedCornerShape(50)
-                )
-        )
+        Box(Modifier.offset(y = (-100).dp)){
+            Image(painter = painterResource(id = drawable),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(135.dp)
+                    .clip(CircleShape)
+                    .border(
+                        border = BorderStroke(4.dp, Color.White),
+                        shape = RoundedCornerShape(50)
+                    )
+            )
+        }
+
 
     }
 
@@ -186,11 +250,12 @@ fun DoubleSwitch(){
                 )
         ) {
             Text(
-                text = "Posts",
+                text = "Cursos",
                 color = if (stateSwitch)
-                        Color.Green
+                        Primary
                     else
-                        Color.White
+                        Color.White,
+                fontSize = 16.sp
             )
         }
 
@@ -216,9 +281,10 @@ fun DoubleSwitch(){
             Text(
                 text = "Photos",
                 color = if (!stateSwitch)
-                    Color.Green
+                    Primary
                 else
-                    Color.White
+                    Color.White,
+                fontSize = 16.sp
             )
         }
     }
