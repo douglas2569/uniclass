@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
@@ -15,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.uniclass.ui.theme.UniclassTheme
+import com.example.uniclass.viewModels.StatusColorsBottomBarViewModel
 import com.example.uniclass.views.LogIn
 import com.example.uniclass.views.Main
 import com.example.uniclass.views.SignUp
@@ -26,7 +28,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             UniclassTheme {
                 Surface () {
-                    App()
+                    val viewModel: StatusColorsBottomBarViewModel by viewModels()
+                    App(viewModel)
                 }
             }
         }
@@ -34,7 +37,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun App() {
+fun App(viewModel: StatusColorsBottomBarViewModel) {
     val modifier:Modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp)
 
     val navController = rememberNavController()
@@ -43,7 +46,7 @@ fun App() {
         composable("main") {
             Main(onLogOutClick = {
                 navController.navigate("log in")
-            })
+            }, viewModel = viewModel)
         }
 
         composable("log in") {
@@ -76,11 +79,12 @@ fun App() {
     }
 
 }
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun AppPreview() {
     UniclassTheme {
-        App()
+        App(viewModel)
     }
 }
+*/

@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
+import com.example.uniclass.config.Primary
 
 @Composable
 fun SimpleCheckbox(text: String) {
@@ -32,10 +33,12 @@ fun SimpleCheckbox(text: String) {
             onCheckedChange = {
                 isChecked = it
             },
+            colors = androidx.compose.material3.CheckboxDefaults.colors(
+                Primary
+            ),
 
-
-            )
-        Text(text = text)
+        )
+        Text(text = text, color = Color.LightGray)
     }
 }
 

@@ -22,9 +22,10 @@ import com.example.uniclass.compoments.UnitComponentBar
 import com.example.uniclass.compoments.UnitComponentBarCircle
 import com.example.uniclass.config.Primary
 import com.example.uniclass.database.dataClasse
+import com.example.uniclass.viewModels.StatusColorsBottomBarViewModel
 
 @Composable
-fun Main(modifier: Modifier = Modifier, onLogOutClick:()->Unit) {
+fun Main(modifier: Modifier = Modifier, onLogOutClick:()->Unit, viewModel: StatusColorsBottomBarViewModel) {
     var classes: List<Map<String, Any>> = dataClasse()
 
 
@@ -150,7 +151,8 @@ fun Main(modifier: Modifier = Modifier, onLogOutClick:()->Unit) {
                                     navController.navigate("course")
                                 },
                                 updatedStatusBottomBarColors,
-                                getStatusBottomBarColors
+                                getStatusBottomBarColors,
+                                viewModel
                             )
                         },
 
@@ -160,7 +162,8 @@ fun Main(modifier: Modifier = Modifier, onLogOutClick:()->Unit) {
                                     navController.navigate("profile")
                                 },
                                 updatedStatusBottomBarColors,
-                                getStatusBottomBarColors
+                                getStatusBottomBarColors,
+                                viewModel
                             )
                         },
 
@@ -170,7 +173,8 @@ fun Main(modifier: Modifier = Modifier, onLogOutClick:()->Unit) {
                                     navController.navigate("support")
                                 },
                                 updatedStatusBottomBarColors,
-                                getStatusBottomBarColors
+                                getStatusBottomBarColors,
+                                viewModel
                             )
                         }
                     )
